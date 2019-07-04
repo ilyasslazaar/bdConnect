@@ -1,0 +1,35 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.nov"
+    },
+    "jhipsterVersion": "5.8.2",
+    "applicationType": "monolith",
+    "baseName": "Reporting_FullStack",
+    "packageName": "com.nov",
+    "packageFolder": "com/nov",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "OGE1NjNhYTEyMGYyZDNmNjQxYTNmMThmOTQ2YTY4NTg1MzM1NDAxZWQ5NmNhMDM0ZGNkZWRhMzYxZTU5NTRkZTBkOWM5NGYzYmQyOTNiYjE3MzU4YzgyMzAxYmY2YWI1ODcwNjBjMjViNjY0YmU2MzEyNzgxNGNiYjJiZjI1MWM=",
+    "clientFramework": "react",
+    "useSass": false,
+    "clientPackageManager": "npm",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false
+  }
+}
