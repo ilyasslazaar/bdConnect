@@ -1,0 +1,50 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "executions",
+            "otherEntityName": "execution",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "query",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipName": "connexion",
+            "otherEntityName": "connexion",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "query",
+            "otherEntityRelationshipNameUndefined": true
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "type",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "statment",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "created_at",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "changelogDate": "20190705082344",
+    "dto": "no",
+    "searchEngine": false,
+    "service": "no",
+    "entityTableName": "query",
+    "databaseType": "sql",
+    "jpaMetamodelFiltering": false,
+    "pagination": "infinite-scroll"
+}

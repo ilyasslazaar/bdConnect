@@ -8,6 +8,26 @@ import { NavDropdown } from '../header-components';
 export const EntitiesMenu = props => (
   // tslint:disable-next-line:jsx-self-close
   <NavDropdown icon="th-list" name="Entities" id="entity-menu">
+    <DropdownItem tag={Link} to="/entity/execution">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Execution
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/query">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Query
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/connexion">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Connexion
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/query">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Query
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/query">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Query
+    </DropdownItem>
     {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
   </NavDropdown>
 );

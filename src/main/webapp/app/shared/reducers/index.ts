@@ -11,6 +11,26 @@ import activate, { ActivateState } from 'app/modules/account/activate/activate.r
 import password, { PasswordState } from 'app/modules/account/password/password.reducer';
 import settings, { SettingsState } from 'app/modules/account/settings/settings.reducer';
 import passwordReset, { PasswordResetState } from 'app/modules/account/password-reset/password-reset.reducer';
+// prettier-ignore
+import execution, {
+  ExecutionState
+} from 'app/entities/execution/execution.reducer';
+// prettier-ignore
+import query, {
+  QueryState
+} from 'app/entities/query/query.reducer';
+// prettier-ignore
+import connexion, {
+  ConnexionState
+} from 'app/entities/connexion/connexion.reducer';
+// prettier-ignore
+import query, {
+  QueryState
+} from 'app/entities/query/query.reducer';
+// prettier-ignore
+import query, {
+  QueryState
+} from 'app/entities/query/query.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -23,6 +43,9 @@ export interface IRootState {
   readonly passwordReset: PasswordResetState;
   readonly password: PasswordState;
   readonly settings: SettingsState;
+  readonly execution: ExecutionState;
+  readonly query: QueryState;
+  readonly connexion: ConnexionState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -37,6 +60,9 @@ const rootReducer = combineReducers<IRootState>({
   passwordReset,
   password,
   settings,
+  execution,
+  query,
+  connexion,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });
