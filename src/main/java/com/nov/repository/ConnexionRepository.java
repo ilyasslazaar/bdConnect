@@ -1,6 +1,7 @@
 package com.nov.repository;
 
 import com.nov.domain.Connexion;
+import com.nov.domain.User;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +16,7 @@ public interface ConnexionRepository extends JpaRepository<Connexion, Long> {
 
     @Query("select connexion from Connexion connexion where connexion.conxUser.login = ?#{principal.username}")
     List<Connexion> findByConxUserIsCurrentUser();
+
+
 
 }

@@ -29,17 +29,9 @@ export class ConnexionDetail extends React.Component<IConnexionDetailProps> {
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="type">Type</span>
-            </dt>
-            <dd>{connexionEntity.type}</dd>
-            <dt>
               <span id="name">Name</span>
             </dt>
             <dd>{connexionEntity.name}</dd>
-            <dt>
-              <span id="driver">Driver</span>
-            </dt>
-            <dd>{connexionEntity.driver}</dd>
             <dt>
               <span id="user">User</span>
             </dt>
@@ -60,8 +52,14 @@ export class ConnexionDetail extends React.Component<IConnexionDetailProps> {
               <span id="hostname">Hostname</span>
             </dt>
             <dd>{connexionEntity.hostname}</dd>
+            <dt>
+              <span id="currentDatabase">Current Database</span>
+            </dt>
+            <dd>{connexionEntity.currentDatabase}</dd>
             <dt>Conx User</dt>
             <dd>{connexionEntity.conxUser ? connexionEntity.conxUser.login : ''}</dd>
+            <dt>Connector</dt>
+            <dd>{connexionEntity.connector ? connexionEntity.connector.id : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/connexion" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

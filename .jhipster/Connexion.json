@@ -6,7 +6,8 @@
             "relationshipName": "queries",
             "otherEntityName": "query",
             "relationshipType": "one-to-many",
-            "otherEntityRelationshipName": "connexion"
+            "otherEntityRelationshipName": "connexion",
+            "otherEntityRelationshipNameUndefined": false
         },
         {
             "relationshipName": "conxUser",
@@ -14,23 +15,21 @@
             "relationshipType": "many-to-one",
             "otherEntityField": "login",
             "ownerSide": true,
-            "otherEntityRelationshipName": "connexion"
+            "otherEntityRelationshipName": "connexion",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipName": "connector",
+            "otherEntityName": "connector",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "connexion",
+            "otherEntityRelationshipNameUndefined": false
         }
     ],
     "fields": [
         {
-            "fieldName": "type",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
             "fieldName": "name",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "driver",
             "fieldType": "String"
         },
         {
@@ -51,6 +50,10 @@
         },
         {
             "fieldName": "hostname",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "currentDatabase",
             "fieldType": "String"
         }
     ],

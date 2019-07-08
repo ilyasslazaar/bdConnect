@@ -28,6 +28,46 @@ export const EntitiesMenu = props => (
       <FontAwesomeIcon icon="asterisk" fixedWidth />
       &nbsp;Query
     </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/connexion">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Connexion
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/connexion">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Connexion
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/connexion">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Connexion
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/connexion">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Connexion
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/connector">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Connector
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/connexion">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Connexion
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/connexion">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Connexion
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/connexion">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Connexion
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/connexion">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Connexion
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/connexion">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />
+      &nbsp;Connexion
+    </DropdownItem>
     {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
   </NavDropdown>
 );

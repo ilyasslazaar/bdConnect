@@ -7,7 +7,6 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -28,15 +27,8 @@ public class Connexion implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Column(name = "jhi_type", nullable = false)
-    private String type;
-
     @Column(name = "name")
     private String name;
-
-    @Column(name = "driver")
-    private String driver;
 
     @Column(name = "jhi_user")
     private String user;
@@ -53,12 +45,19 @@ public class Connexion implements Serializable {
     @Column(name = "hostname")
     private String hostname;
 
+    @Column(name = "current_database")
+    private String currentDatabase;
+
     @OneToMany(mappedBy = "connexion")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Query> queries = new HashSet<>();
     @ManyToOne
     @JsonIgnoreProperties("connexions")
     private User conxUser;
+
+    @ManyToOne
+    @JsonIgnoreProperties("connexions")
+    private Connector connector;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -67,19 +66,6 @@ public class Connexion implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public Connexion type(String type) {
-        this.type = type;
-        return this;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getName() {
@@ -93,19 +79,6 @@ public class Connexion implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDriver() {
-        return driver;
-    }
-
-    public Connexion driver(String driver) {
-        this.driver = driver;
-        return this;
-    }
-
-    public void setDriver(String driver) {
-        this.driver = driver;
     }
 
     public String getUser() {
@@ -173,6 +146,19 @@ public class Connexion implements Serializable {
         this.hostname = hostname;
     }
 
+    public String getCurrentDatabase() {
+        return currentDatabase;
+    }
+
+    public Connexion currentDatabase(String currentDatabase) {
+        this.currentDatabase = currentDatabase;
+        return this;
+    }
+
+    public void setCurrentDatabase(String currentDatabase) {
+        this.currentDatabase = currentDatabase;
+    }
+
     public Set<Query> getQueries() {
         return queries;
     }
@@ -210,6 +196,19 @@ public class Connexion implements Serializable {
     public void setConxUser(User user) {
         this.conxUser = user;
     }
+
+    public Connector getConnector() {
+        return connector;
+    }
+
+    public Connexion connector(Connector connector) {
+        this.connector = connector;
+        return this;
+    }
+
+    public void setConnector(Connector connector) {
+        this.connector = connector;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -236,14 +235,13 @@ public class Connexion implements Serializable {
     public String toString() {
         return "Connexion{" +
             "id=" + getId() +
-            ", type='" + getType() + "'" +
             ", name='" + getName() + "'" +
-            ", driver='" + getDriver() + "'" +
             ", user='" + getUser() + "'" +
             ", password='" + getPassword() + "'" +
             ", ssl='" + isSsl() + "'" +
             ", port='" + getPort() + "'" +
             ", hostname='" + getHostname() + "'" +
+            ", currentDatabase='" + getCurrentDatabase() + "'" +
             "}";
     }
 }

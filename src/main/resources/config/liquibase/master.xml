@@ -8,6 +8,7 @@
     <include file="config/liquibase/changelog/20190705081922_added_entity_Execution.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190705082344_added_entity_Query.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190705083142_added_entity_Connexion.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190708084133_added_entity_Connector.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20190705081922_added_entity_constraints_Execution.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190705083142_added_entity_constraints_Connexion.xml" relativeToChangelogFile="false"/>

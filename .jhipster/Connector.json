@@ -1,0 +1,33 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "connexions",
+            "otherEntityName": "connexion",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "connector"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "type",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "driver",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20190708084133",
+    "dto": "no",
+    "searchEngine": false,
+    "service": "no",
+    "entityTableName": "connector",
+    "databaseType": "sql",
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination"
+}

@@ -1,8 +1,11 @@
 package com.nov.repository;
 
-import com.nov.domain.Query;
+
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 
 
 /**
@@ -10,6 +13,8 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface QueryRepository extends JpaRepository<Query, Long> {
+public interface QueryRepository extends JpaRepository<com.nov.domain.Query, Long> {
+  @Query(value = "select* from query where connexion_id = ?1 ",nativeQuery = true)
+     List<com.nov.domain.Query>getAllByConnexionId(Long id);
 
 }

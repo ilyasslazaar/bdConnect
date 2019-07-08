@@ -15,6 +15,7 @@ import passwordReset, { PasswordResetState } from 'app/modules/account/password-
 import execution, {
   ExecutionState
 } from 'app/entities/execution/execution.reducer';
+
 // prettier-ignore
 import query, {
   QueryState
@@ -24,13 +25,9 @@ import connexion, {
   ConnexionState
 } from 'app/entities/connexion/connexion.reducer';
 // prettier-ignore
-import query, {
-  QueryState
-} from 'app/entities/query/query.reducer';
-// prettier-ignore
-import query, {
-  QueryState
-} from 'app/entities/query/query.reducer';
+import connector, {
+  ConnectorState
+} from 'app/entities/connector/connector.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -46,6 +43,7 @@ export interface IRootState {
   readonly execution: ExecutionState;
   readonly query: QueryState;
   readonly connexion: ConnexionState;
+  readonly connector: ConnectorState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -63,6 +61,7 @@ const rootReducer = combineReducers<IRootState>({
   execution,
   query,
   connexion,
+  connector,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

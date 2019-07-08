@@ -40,14 +40,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = ReportingFullStackApp.class)
 public class ConnexionResourceIntTest {
 
-    private static final String DEFAULT_TYPE = "AAAAAAAAAA";
-    private static final String UPDATED_TYPE = "BBBBBBBBBB";
-
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
-
-    private static final String DEFAULT_DRIVER = "AAAAAAAAAA";
-    private static final String UPDATED_DRIVER = "BBBBBBBBBB";
 
     private static final String DEFAULT_USER = "AAAAAAAAAA";
     private static final String UPDATED_USER = "BBBBBBBBBB";
@@ -63,6 +57,9 @@ public class ConnexionResourceIntTest {
 
     private static final String DEFAULT_HOSTNAME = "AAAAAAAAAA";
     private static final String UPDATED_HOSTNAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_CURRENT_DATABASE = "AAAAAAAAAA";
+    private static final String UPDATED_CURRENT_DATABASE = "BBBBBBBBBB";
 
     @Autowired
     private ConnexionRepository connexionRepository;
@@ -106,14 +103,13 @@ public class ConnexionResourceIntTest {
      */
     public static Connexion createEntity(EntityManager em) {
         Connexion connexion = new Connexion()
-            .type(DEFAULT_TYPE)
             .name(DEFAULT_NAME)
-            .driver(DEFAULT_DRIVER)
             .user(DEFAULT_USER)
             .password(DEFAULT_PASSWORD)
             .ssl(DEFAULT_SSL)
             .port(DEFAULT_PORT)
-            .hostname(DEFAULT_HOSTNAME);
+            .hostname(DEFAULT_HOSTNAME)
+            .currentDatabase(DEFAULT_CURRENT_DATABASE);
         return connexion;
     }
 
@@ -137,14 +133,13 @@ public class ConnexionResourceIntTest {
         List<Connexion> connexionList = connexionRepository.findAll();
         assertThat(connexionList).hasSize(databaseSizeBeforeCreate + 1);
         Connexion testConnexion = connexionList.get(connexionList.size() - 1);
-        assertThat(testConnexion.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testConnexion.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testConnexion.getDriver()).isEqualTo(DEFAULT_DRIVER);
         assertThat(testConnexion.getUser()).isEqualTo(DEFAULT_USER);
         assertThat(testConnexion.getPassword()).isEqualTo(DEFAULT_PASSWORD);
         assertThat(testConnexion.isSsl()).isEqualTo(DEFAULT_SSL);
         assertThat(testConnexion.getPort()).isEqualTo(DEFAULT_PORT);
         assertThat(testConnexion.getHostname()).isEqualTo(DEFAULT_HOSTNAME);
+        assertThat(testConnexion.getCurrentDatabase()).isEqualTo(DEFAULT_CURRENT_DATABASE);
     }
 
     @Test
@@ -168,24 +163,6 @@ public class ConnexionResourceIntTest {
 
     @Test
     @Transactional
-    public void checkTypeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = connexionRepository.findAll().size();
-        // set the field null
-        connexion.setType(null);
-
-        // Create the Connexion, which fails.
-
-        restConnexionMockMvc.perform(post("/api/connexions")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(connexion)))
-            .andExpect(status().isBadRequest());
-
-        List<Connexion> connexionList = connexionRepository.findAll();
-        assertThat(connexionList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllConnexions() throws Exception {
         // Initialize the database
         connexionRepository.saveAndFlush(connexion);
@@ -195,14 +172,13 @@ public class ConnexionResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(connexion.getId().intValue())))
-            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].driver").value(hasItem(DEFAULT_DRIVER.toString())))
             .andExpect(jsonPath("$.[*].user").value(hasItem(DEFAULT_USER.toString())))
             .andExpect(jsonPath("$.[*].password").value(hasItem(DEFAULT_PASSWORD.toString())))
             .andExpect(jsonPath("$.[*].ssl").value(hasItem(DEFAULT_SSL.booleanValue())))
             .andExpect(jsonPath("$.[*].port").value(hasItem(DEFAULT_PORT.toString())))
-            .andExpect(jsonPath("$.[*].hostname").value(hasItem(DEFAULT_HOSTNAME.toString())));
+            .andExpect(jsonPath("$.[*].hostname").value(hasItem(DEFAULT_HOSTNAME.toString())))
+            .andExpect(jsonPath("$.[*].currentDatabase").value(hasItem(DEFAULT_CURRENT_DATABASE.toString())));
     }
     
     @Test
@@ -216,14 +192,13 @@ public class ConnexionResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(connexion.getId().intValue()))
-            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.driver").value(DEFAULT_DRIVER.toString()))
             .andExpect(jsonPath("$.user").value(DEFAULT_USER.toString()))
             .andExpect(jsonPath("$.password").value(DEFAULT_PASSWORD.toString()))
             .andExpect(jsonPath("$.ssl").value(DEFAULT_SSL.booleanValue()))
             .andExpect(jsonPath("$.port").value(DEFAULT_PORT.toString()))
-            .andExpect(jsonPath("$.hostname").value(DEFAULT_HOSTNAME.toString()));
+            .andExpect(jsonPath("$.hostname").value(DEFAULT_HOSTNAME.toString()))
+            .andExpect(jsonPath("$.currentDatabase").value(DEFAULT_CURRENT_DATABASE.toString()));
     }
 
     @Test
@@ -247,14 +222,13 @@ public class ConnexionResourceIntTest {
         // Disconnect from session so that the updates on updatedConnexion are not directly saved in db
         em.detach(updatedConnexion);
         updatedConnexion
-            .type(UPDATED_TYPE)
             .name(UPDATED_NAME)
-            .driver(UPDATED_DRIVER)
             .user(UPDATED_USER)
             .password(UPDATED_PASSWORD)
             .ssl(UPDATED_SSL)
             .port(UPDATED_PORT)
-            .hostname(UPDATED_HOSTNAME);
+            .hostname(UPDATED_HOSTNAME)
+            .currentDatabase(UPDATED_CURRENT_DATABASE);
 
         restConnexionMockMvc.perform(put("/api/connexions")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -265,14 +239,13 @@ public class ConnexionResourceIntTest {
         List<Connexion> connexionList = connexionRepository.findAll();
         assertThat(connexionList).hasSize(databaseSizeBeforeUpdate);
         Connexion testConnexion = connexionList.get(connexionList.size() - 1);
-        assertThat(testConnexion.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testConnexion.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testConnexion.getDriver()).isEqualTo(UPDATED_DRIVER);
         assertThat(testConnexion.getUser()).isEqualTo(UPDATED_USER);
         assertThat(testConnexion.getPassword()).isEqualTo(UPDATED_PASSWORD);
         assertThat(testConnexion.isSsl()).isEqualTo(UPDATED_SSL);
         assertThat(testConnexion.getPort()).isEqualTo(UPDATED_PORT);
         assertThat(testConnexion.getHostname()).isEqualTo(UPDATED_HOSTNAME);
+        assertThat(testConnexion.getCurrentDatabase()).isEqualTo(UPDATED_CURRENT_DATABASE);
     }
 
     @Test

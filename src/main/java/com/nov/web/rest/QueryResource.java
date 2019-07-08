@@ -1,12 +1,14 @@
 package com.nov.web.rest;
 import com.nov.domain.Query;
 import com.nov.repository.QueryRepository;
+import com.nov.service.QueryService;
 import com.nov.web.rest.errors.BadRequestAlertException;
 import com.nov.web.rest.util.HeaderUtil;
 import com.nov.web.rest.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -28,6 +30,8 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class QueryResource {
 
+    @Autowired
+    private QueryService queryService;
     private final Logger log = LoggerFactory.getLogger(QueryResource.class);
 
     private static final String ENTITY_NAME = "query";
@@ -117,4 +121,16 @@ public class QueryResource {
         queryRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+
+    //getting Queries  ByConnexionId
+    @GetMapping("/userqueries/{id}")
+    public List<Query> getQueriesByConnection(@PathVariable  Long id){
+
+        return queryService.getAllQueriesByConnectionId(id);
+
+    }
+
+
+
 }

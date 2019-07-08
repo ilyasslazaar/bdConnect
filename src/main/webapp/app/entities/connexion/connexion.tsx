@@ -35,15 +35,15 @@ export class Connexion extends React.Component<IConnexionProps> {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Type</th>
                 <th>Name</th>
-                <th>Driver</th>
                 <th>User</th>
                 <th>Password</th>
                 <th>Ssl</th>
                 <th>Port</th>
                 <th>Hostname</th>
+                <th>Current Database</th>
                 <th>Conx User</th>
+                <th>Connector</th>
                 <th />
               </tr>
             </thead>
@@ -55,15 +55,15 @@ export class Connexion extends React.Component<IConnexionProps> {
                       {connexion.id}
                     </Button>
                   </td>
-                  <td>{connexion.type}</td>
                   <td>{connexion.name}</td>
-                  <td>{connexion.driver}</td>
                   <td>{connexion.user}</td>
                   <td>{connexion.password}</td>
                   <td>{connexion.ssl ? 'true' : 'false'}</td>
                   <td>{connexion.port}</td>
                   <td>{connexion.hostname}</td>
+                  <td>{connexion.currentDatabase}</td>
                   <td>{connexion.conxUser ? connexion.conxUser.login : ''}</td>
+                  <td>{connexion.connector ? <Link to={`connector/${connexion.connector.id}`}>{connexion.connector.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${connexion.id}`} color="info" size="sm">

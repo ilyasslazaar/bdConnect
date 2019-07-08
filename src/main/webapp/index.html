@@ -1,34 +1,46 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
-<head>
+  <head>
     <base href="./" />
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Reporting_FullStack 1er Modification </title>
-    <meta name="description" content="Description for Reporting_FullStack">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="theme-color" content="#000000">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Reporting_FullStack 1er Modification</title>
+    <meta name="description" content="Description for Reporting_FullStack" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="theme-color" content="#000000" />
     <link rel="shortcut icon" href="favicon.ico" />
     <link rel="manifest" href="manifest.webapp" />
-    <link rel="stylesheet" href="static/css/loading.css">
+    <link rel="stylesheet" href="static/css/loading.css" />
     <!-- jhipster-needle-add-resources-to-root - JHipster will add new resources here -->
-</head>
-<body>
+  </head>
+  <body>
     <!--[if lt IE 9]>
-        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve
+        your experience.
+      </p>
     <![endif]-->
     <div id="root">
-        <div class="app-loading">
-            <div class="lds-css ng-scope">
-                <div class="lds-pacman">
-                    <div><div></div><div></div><div></div></div>
-                    <div><div></div><div></div><div></div></div>
-                </div>
+      <!-- <div class="app-loading">
+        <div class="lds-css ng-scope">
+          <div class="lds-pacman">
+            <div>
+              <div></div>
+              <div></div>
+              <div></div>
             </div>
+            <div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
         </div>
-        <div class="app-loading">
+      </div> -->
+      <!--
+       <div class="app-loading">
             <div id="jhipster-error" style="display:none">
-                <!-- This content is for troubleshooting purpose and will be removed when app renders -->
+                This content is for troubleshooting purpose and will be removed when app renders 
                 <h1>An error has occurred :-(</h1>
                 <h2>Usual error causes</h2>
                 <ol>
@@ -64,23 +76,24 @@
                 <p>
                     Join our chat room on <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank">Gitter.im</a>. Please note that this is a public chat room, and that we expect you to respect other people and write in a correct English language!
                 </p>
-                <!-- end of troubleshooting content -->
+                 end of troubleshooting content 
             </div>
+        
         </div>
-    </div>
+    --></div>
     <noscript>
-        <h1>You must enable javascript to view this page.</h1>
+      <h1>You must enable javascript to view this page.</h1>
     </noscript>
     <script type="text/javascript" language="javascript">
-        window.onload=function() {
-            setTimeout(showError, 4000);
+      window.onload = function() {
+        setTimeout(showError, 4000);
+      };
+      function showError() {
+        var errorElm = document.getElementById('jhipster-error');
+        if (errorElm && errorElm.style) {
+          errorElm.style.display = 'block';
         }
-        function showError() {
-            var errorElm = document.getElementById("jhipster-error");
-            if (errorElm && errorElm.style) {
-                errorElm.style.display = "block";
-            }
-        }
+      }
     </script>
     <!-- uncomment this for adding service worker
         <script>
@@ -103,5 +116,5 @@
         r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
         ga('create','UA-XXXXX-X');ga('send','pageview');
     </script>-->
-</body>
+  </body>
 </html>
