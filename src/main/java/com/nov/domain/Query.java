@@ -42,7 +42,7 @@ public class Query implements Serializable {
     @Column(name = "created_at")
     private LocalDate created_at;
 
-    @OneToMany(mappedBy = "query")
+    @OneToMany(mappedBy = "query",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Execution> executions = new HashSet<>();
     @ManyToOne

@@ -15,11 +15,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import javax.servlet.*;
+import javax.sql.DataSource;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
@@ -154,5 +156,14 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
         }
         return new CorsFilter(source);
     }
+
+
+
+    // Custom configurations
+
+
+
+
+
 
 }

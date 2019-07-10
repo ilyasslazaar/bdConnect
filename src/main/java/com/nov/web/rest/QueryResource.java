@@ -1,4 +1,5 @@
 package com.nov.web.rest;
+import com.nov.domain.Execution;
 import com.nov.domain.Query;
 import com.nov.repository.QueryRepository;
 import com.nov.service.QueryService;
@@ -32,6 +33,7 @@ public class QueryResource {
 
     @Autowired
     private QueryService queryService;
+
     private final Logger log = LoggerFactory.getLogger(QueryResource.class);
 
     private static final String ENTITY_NAME = "query";
@@ -130,6 +132,7 @@ public class QueryResource {
         return queryService.getAllQueriesByConnectionId(id);
 
     }
+
 
 
 

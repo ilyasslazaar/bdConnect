@@ -18,5 +18,9 @@ public interface ConnexionRepository extends JpaRepository<Connexion, Long> {
     List<Connexion> findByConxUserIsCurrentUser();
 
 
+    @Query(value ="SELECT q FROM  Connexion  c join c.queries q where c.id = q.connexion and q.id = ?1 and c.conxUser.login = ?#{principal.username} ")
+    com.nov.domain.Query getConnexionQueryById(Long query_id);
+
+
 
 }

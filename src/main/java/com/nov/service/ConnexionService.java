@@ -29,12 +29,6 @@ public class ConnexionService {
 
         return repository.findByConxUserIsCurrentUser();
     }
-
-    public List<Query> getAllQueries(Long ConnId){
-
-        return null;
-    }
-
     public Connexion saveConnexion(Connexion connexion){
         User user = userService.getUserWithAuthorities().get();
         connexion.setConxUser(user);
@@ -42,5 +36,12 @@ public class ConnexionService {
 
     }
 
+    public Connexion  getConnexionById(Long id){
+        return repository.getOne(id);
+    }
+
+    public Query getConnextionQueryById(Long stm_id){
+        return repository.getConnexionQueryById(stm_id);
+    }
 
 }

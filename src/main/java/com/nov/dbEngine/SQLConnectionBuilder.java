@@ -1,11 +1,17 @@
 package com.nov.dbEngine;
 
 
+import com.mysql.jdbc.Driver;
 import com.nov.domain.Connexion;
+import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class SQLConnectionBuilder {
     private  Connexion connexion;
@@ -21,16 +27,52 @@ public class SQLConnectionBuilder {
         this.connexion = conn;
     }
 
-    public Connection build() throws SQLException, ClassNotFoundException {
-
-        return DriverManager.getConnection(connexion.getHostname()+connexion.getPort()+"/"
-                             +connexion.getCurrentDatabase(),connexion.getUser(),
-                                                         connexion.getPassword());
+    public JdbcTemplate build()  {
+        JdbcTemplate template = new JdbcTemplate();
+        template.setDataSource(dataSource("mysql"));
+        return template;
     }
 
-    public Connection reset(String database) throws SQLException, ClassNotFoundException {
-        connexion.setCurrentDatabase(database);
-        return this.build();
+    public DataSource dataSource(String SGBD) {
+        DriverManagerDataSource ds = new DriverManagerDataSource();
+
+        String baseUrl = null;
+        switch (SGBD){
+            case "mysql":
+                baseUrl="jdbc:mysql://";
+                break;
+            case "oracle":
+                baseUrl = "jdbc:oracle:thin:@";
+                break;
+            case "h2":
+
+                baseUrl = "jjdbc:h2:mem:";
+                break;
+        }
+        ds.setDriverClassName(connexion.getConnector().getDriver());
+        ds.setUrl(baseUrl+connexion.getHostname()+":"+connexion.getPort()+"/"
+            +connexion.getCurrentDatabase());
+        ds.setUsername(connexion.getUser());
+        ds.setPassword(connexion.getPassword());
+
+        System.out.println(baseUrl+connexion.getHostname()+":"+connexion.getPort()+"/"
+            +connexion.getCurrentDatabase());
+
+        return ds;
     }
+
+
+
 
 }
+
+
+    /*        return DriverManager.getConnection(connexion.getHostname()+connexion.getPort()+"/"
+                             +connexion.getCurrentDatabase(),connexion.getUser(),
+                                                         connexion.getPassword());*/
+
+
+    /*public Connection reset(String database) throws SQLException, ClassNotFoundException {
+        connexion.setCurrentDatabase(database);
+        return this.build();
+    }*/

@@ -1,6 +1,7 @@
 package com.nov.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -32,6 +33,7 @@ public class Execution implements Serializable {
     private Boolean status;
 
     @ManyToOne
+    @JsonIgnore
     private Query query;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

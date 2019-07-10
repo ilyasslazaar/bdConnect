@@ -1,12 +1,14 @@
 package com.nov.web.rest;
 import com.nov.domain.Execution;
 import com.nov.repository.ExecutionRepository;
+import com.nov.service.ExecutionService;
 import com.nov.web.rest.errors.BadRequestAlertException;
 import com.nov.web.rest.util.HeaderUtil;
 import com.nov.web.rest.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -28,6 +30,9 @@ import java.util.Optional;
 public class ExecutionResource {
 
     private final Logger log = LoggerFactory.getLogger(ExecutionResource.class);
+
+    @Autowired
+    ExecutionService executionService;
 
     private static final String ENTITY_NAME = "execution";
 
@@ -116,4 +121,12 @@ public class ExecutionResource {
         executionRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    @GetMapping("/query/{id}/executions")
+    public List<Execution> getQueryExecutions(@PathVariable Long id){
+
+        return executionRepository.getExecutionByQueryId(id);
+    }
+
+
 }

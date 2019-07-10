@@ -50,7 +50,7 @@ public class ConnexionResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new connexion, or with status 400 (Bad Request) if the connexion has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PostMapping("/connexion")
+    @PostMapping("/connexions")
     public ResponseEntity<Connexion> createConnexion(@RequestBody Connexion connexion) throws URISyntaxException {
         log.debug("REST request to save Connexion : {}", connexion);
         if (connexion.getId() != null) {
@@ -71,7 +71,7 @@ public class ConnexionResource {
      * or with status 500 (Internal Server Error) if the connexion couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PutMapping("/connexion")
+    @PutMapping("/connexions")
     public ResponseEntity<Connexion> updateConnexion(@RequestBody Connexion connexion) throws URISyntaxException {
         log.debug("REST request to update Connexion : {}", connexion);
         if (connexion.getId() == null) {
@@ -100,7 +100,7 @@ public class ConnexionResource {
      * @param id the id of the connexion to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the connexion, or with status 404 (Not Found)
      */
-    @GetMapping("/connexion/{id}")
+    @GetMapping("/connexions/{id}")
     public ResponseEntity<Connexion> getConnexion(@PathVariable Long id) {
         log.debug("REST request to get Connexion : {}", id);
         Optional<Connexion> connexion = connexionRepository.findById(id);
@@ -113,7 +113,7 @@ public class ConnexionResource {
      * @param id the id of the connexion to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @DeleteMapping("/connexion/{id}")
+    @DeleteMapping("/connexions/{id}")
     public ResponseEntity<Void> deleteConnexion(@PathVariable Long id) {
         log.debug("REST request to delete Connexion : {}", id);
         connexionRepository.deleteById(id);
@@ -122,7 +122,7 @@ public class ConnexionResource {
 
     //getConnections by userId
 
-    @GetMapping("/userconnection/{id}")
+    @GetMapping("/currentUserConnections")
     public List<Connexion>getConnexionsByUser(){
 
         return connexionService.getConnexionsByUserId();
