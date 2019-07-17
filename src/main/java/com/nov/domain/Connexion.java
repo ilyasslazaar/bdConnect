@@ -48,7 +48,7 @@ public class Connexion implements Serializable {
     @Column(name = "current_database")
     private String currentDatabase;
 
-    @OneToMany(mappedBy = "connexion",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "connexion",fetch = FetchType.LAZY)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Query> queries = new HashSet<>();
     @ManyToOne

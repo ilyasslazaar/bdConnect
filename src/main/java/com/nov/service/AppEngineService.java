@@ -43,19 +43,18 @@ public class AppEngineService {
     public SQLTable executeQuery(Connexion conn, String query){
         SQLTable table = new SQLTable();
         SQLConnectionBuilder builder = new SQLConnectionBuilder(conn);
-
+        System.out.println(builder.getConnetionParams());
         JdbcTemplate template = builder.build();
         try {
             table.setRows(template.query(query, new RowMapper<Row>() {
                 @Override
                 public Row mapRow(ResultSet resultSet, int ix) throws SQLException {
 
-
                     return  mapRowMethod(resultSet, ix, table);
                 }
             }));
         }catch (BadSqlGrammarException e){
-
+            e.printStackTrace();
         }
 
 

@@ -50,14 +50,12 @@ public class AppEngineResource {
     @GetMapping("/statment/{query_id}")
     public SQLTable executeStatmentWithId(@PathVariable Long query_id) throws Exception {
         SQLTable table = null;
-
         try{
 
             Query query = connexionService.getConnextionQueryById(query_id);
             if(query !=null){
                 // execute statment
                 table = appEngineService.executeQuery(query.getConnexion(), query);
-
             }
         }catch (Exception e){
             e.printStackTrace();

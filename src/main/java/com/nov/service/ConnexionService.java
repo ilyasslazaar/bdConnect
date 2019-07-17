@@ -7,6 +7,10 @@ import com.nov.repository.ConnexionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,10 +28,11 @@ public class ConnexionService {
 
     private final Logger log = LoggerFactory.getLogger(ConnexionService.class);
 
-    public List<Connexion> getConnexionsByUserId(){
+    public Page<Connexion> getConnexionsByUserId(Integer currentPage, Integer pageSize, String search, String orderby){
         log.debug("REST request to get all Connexions Of a User");
+        Pageable pageable = PageRequest.of(currentPage-1, pageSize, Sort.by(orderby));
 
-        return repository.findByConxUserIsCurrentUser();
+        return repository.findByConxUserIsCurrentUser(search,pageable);
     }
     public Connexion saveConnexion(Connexion connexion){
         User user = userService.getUserWithAuthorities().get();
@@ -37,7 +42,7 @@ public class ConnexionService {
     }
 
     public Connexion  getConnexionById(Long id){
-        return repository.getOne(id);
+        return repository.findById(id).get();
     }
 
     public Query getConnextionQueryById(Long stm_id){

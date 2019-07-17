@@ -12,6 +12,8 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.trace.http.HttpTrace;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -91,7 +93,7 @@ public class ConnexionResource {
     @GetMapping("/connexions")
     public List<Connexion> getAllConnexions() {
         log.debug("REST request to get all Connexions");
-        return connexionRepository.findAll();
+        return (List<Connexion>) connexionRepository.findAll();
     }
 
     /**
@@ -123,9 +125,10 @@ public class ConnexionResource {
     //getConnections by userId
 
     @GetMapping("/currentUserConnections")
-    public List<Connexion>getConnexionsByUser(){
+    public Page<Connexion> getConnexionsByUser(@RequestParam Integer currentPage, @RequestParam Integer pageSize, @RequestParam String search, @RequestParam String orderBy){
 
-        return connexionService.getConnexionsByUserId();
+
+        return connexionService.getConnexionsByUserId(currentPage,pageSize,search,orderBy);
     }
 
 
