@@ -1,7 +1,7 @@
 package com.nov.web.rest;
-import com.nov.domain.Connexion;
-import com.nov.domain.Query;
-import com.nov.domain.User;
+import com.nov.dbEngine.models.ConnexionId;
+import com.nov.domain.*;
+import com.nov.repository.ConnectorRepository;
 import com.nov.repository.ConnexionRepository;
 import com.nov.security.SecurityUtils;
 import com.nov.service.ConnexionService;
@@ -22,6 +22,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +42,9 @@ public class ConnexionResource {
     @Autowired
     private ConnexionService connexionService;
 
+    @Autowired
+    private ConnectorRepository connectorRepository;
+
     public ConnexionResource(ConnexionRepository connexionRepository) {
         this.connexionRepository = connexionRepository;
     }
@@ -53,11 +57,16 @@ public class ConnexionResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/connexions")
-    public ResponseEntity<Connexion> createConnexion(@RequestBody Connexion connexion) throws URISyntaxException {
+    public ResponseEntity<Connexion> createConnexion(@RequestBody Connexion connexion,@RequestParam Long connectorId) throws URISyntaxException {
+
+
         log.debug("REST request to save Connexion : {}", connexion);
         if (connexion.getId() != null) {
             throw new BadRequestAlertException("A new connexion cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        Connector connector = connectorRepository.findById(connectorId).get();
+        connexion.setConnector(connector);
+
         Connexion result = connexionService.saveConnexion(connexion);
         return ResponseEntity.created(new URI("/api/connexions/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -131,18 +140,13 @@ public class ConnexionResource {
         return connexionService.getConnexionsByUserId(currentPage,pageSize,search,orderBy);
     }
 
-
-    // execute a query of a connection
-
-
-    // get All databases of a connection
-
-    public List<String> getAllDatabasesByConnexion(){
-
-
-
-        return null;
+    @PostMapping("/connexions/delete")
+    public ResponseEntity<Void> deleteConnexions(@RequestBody List<Long> ids) {
+        log.debug("REST request to delete Connexion : {}", ids);
+        connexionService.deleteListOfConnctions(ids);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, ids.toString())).build();
     }
+
 
 
 

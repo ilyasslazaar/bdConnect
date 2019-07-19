@@ -65,14 +65,3 @@ public class SQLConnectionBuilder {
 
 
 }
-
-
-    /*        return DriverManager.getConnection(connexion.getHostname()+connexion.getPort()+"/"
-                             +connexion.getCurrentDatabase(),connexion.getUser(),
-                                                         connexion.getPassword());*/
-
-
-    /*public Connection reset(String database) throws SQLException, ClassNotFoundException {
-        connexion.setCurrentDatabase(database);
-        return this.build();
-    }*/

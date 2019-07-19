@@ -46,13 +46,21 @@ public class AppEngineService {
         System.out.println(builder.getConnetionParams());
         JdbcTemplate template = builder.build();
         try {
-            table.setRows(template.query(query, new RowMapper<Row>() {
-                @Override
-                public Row mapRow(ResultSet resultSet, int ix) throws SQLException {
+            if(query.toLowerCase().contains("update")||query.toLowerCase().contains("delete")
+            ||query.toLowerCase().contains("insert")){
+                int count = template.update(query);
+                table.setTableName("Executed query");
+                table.addRow(new Row(new Column("Rows affected",count)));
+            }else {
 
-                    return  mapRowMethod(resultSet, ix, table);
-                }
-            }));
+                table.setRows(template.query(query, new RowMapper<Row>() {
+                    @Override
+                    public Row mapRow(ResultSet resultSet, int ix) throws SQLException {
+
+                        return mapRowMethod(resultSet, ix, table);
+                    }
+                }));
+            }
         }catch (BadSqlGrammarException e){
             e.printStackTrace();
         }

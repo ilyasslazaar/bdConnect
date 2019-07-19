@@ -49,4 +49,8 @@ public class ConnexionService {
         return repository.getConnexionQueryById(stm_id);
     }
 
+    public void deleteListOfConnctions(List<Long> ids){
+        repository.deleteList(ids);
+    }
+
 }

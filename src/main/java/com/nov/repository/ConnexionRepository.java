@@ -24,6 +24,9 @@ public interface ConnexionRepository extends PagingAndSortingRepository<Connexio
     @Query(value ="SELECT q FROM  Connexion  c join c.queries q where c.id = q.connexion and q.id = ?1 and c.conxUser.login = ?#{principal.username} ")
     com.nov.domain.Query getConnexionQueryById(Long query_id);
 
+    @Modifying
+    @Query(value = "delete from Connexion where id in ?1")
+    void deleteList(List<Long> ids);
 
 
 }
