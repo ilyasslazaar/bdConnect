@@ -148,9 +148,17 @@ public class ConnexionResource {
     }
 
 
+    @GetMapping("/connexions/updateDatabase/{conn}/{database}")
+    public void  updateDtatabase(@PathVariable String database,@PathVariable Long conn){
 
+        Connexion connexion = connexionRepository.findById(conn).get();
+        if(connexion == null){
+            throw new RuntimeException("Error : no connection with id = "+conn);
 
-
+        }
+        connexion.setCurrentDatabase(database);
+        connexionRepository.save(connexion);
+    }
 
 
 

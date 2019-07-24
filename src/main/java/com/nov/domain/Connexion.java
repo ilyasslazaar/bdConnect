@@ -49,7 +49,7 @@ public class Connexion implements Serializable {
     private String currentDatabase;
 
     @OneToMany(mappedBy = "connexion",fetch = FetchType.EAGER)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    //@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Query> queries = new HashSet<>();
     @ManyToOne
     @JsonIgnoreProperties("connexions")

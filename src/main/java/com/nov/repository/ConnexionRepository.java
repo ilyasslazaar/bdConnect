@@ -29,4 +29,5 @@ public interface ConnexionRepository extends PagingAndSortingRepository<Connexio
     void deleteList(List<Long> ids);
 
 
+
 }
