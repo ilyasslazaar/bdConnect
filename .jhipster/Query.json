@@ -15,7 +15,7 @@
             "relationshipType": "many-to-one",
             "otherEntityField": "id",
             "otherEntityRelationshipName": "query",
-            "otherEntityRelationshipNameUndefined": true
+            "otherEntityRelationshipNameUndefined": false
         }
     ],
     "fields": [
@@ -37,6 +37,10 @@
         {
             "fieldName": "created_at",
             "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "database",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20190705082344",

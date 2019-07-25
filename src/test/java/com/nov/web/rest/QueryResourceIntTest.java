@@ -54,6 +54,9 @@ public class QueryResourceIntTest {
     private static final LocalDate DEFAULT_CREATED_AT = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_CREATED_AT = LocalDate.now(ZoneId.systemDefault());
 
+    private static final String DEFAULT_DATABASE = "AAAAAAAAAA";
+    private static final String UPDATED_DATABASE = "BBBBBBBBBB";
+
     @Autowired
     private QueryRepository queryRepository;
 
@@ -99,7 +102,8 @@ public class QueryResourceIntTest {
             .type(DEFAULT_TYPE)
             .name(DEFAULT_NAME)
             .statment(DEFAULT_STATMENT)
-            .created_at(DEFAULT_CREATED_AT);
+            .created_at(DEFAULT_CREATED_AT)
+            .database(DEFAULT_DATABASE);
         return query;
     }
 
@@ -127,6 +131,7 @@ public class QueryResourceIntTest {
         assertThat(testQuery.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testQuery.getStatment()).isEqualTo(DEFAULT_STATMENT);
         assertThat(testQuery.getCreated_at()).isEqualTo(DEFAULT_CREATED_AT);
+        assertThat(testQuery.getDatabase()).isEqualTo(DEFAULT_DATABASE);
     }
 
     @Test
@@ -180,7 +185,8 @@ public class QueryResourceIntTest {
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].statment").value(hasItem(DEFAULT_STATMENT.toString())))
-            .andExpect(jsonPath("$.[*].created_at").value(hasItem(DEFAULT_CREATED_AT.toString())));
+            .andExpect(jsonPath("$.[*].created_at").value(hasItem(DEFAULT_CREATED_AT.toString())))
+            .andExpect(jsonPath("$.[*].database").value(hasItem(DEFAULT_DATABASE.toString())));
     }
     
     @Test
@@ -197,7 +203,8 @@ public class QueryResourceIntTest {
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.statment").value(DEFAULT_STATMENT.toString()))
-            .andExpect(jsonPath("$.created_at").value(DEFAULT_CREATED_AT.toString()));
+            .andExpect(jsonPath("$.created_at").value(DEFAULT_CREATED_AT.toString()))
+            .andExpect(jsonPath("$.database").value(DEFAULT_DATABASE.toString()));
     }
 
     @Test
@@ -224,7 +231,8 @@ public class QueryResourceIntTest {
             .type(UPDATED_TYPE)
             .name(UPDATED_NAME)
             .statment(UPDATED_STATMENT)
-            .created_at(UPDATED_CREATED_AT);
+            .created_at(UPDATED_CREATED_AT)
+            .database(UPDATED_DATABASE);
 
         restQueryMockMvc.perform(put("/api/queries")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -239,6 +247,7 @@ public class QueryResourceIntTest {
         assertThat(testQuery.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testQuery.getStatment()).isEqualTo(UPDATED_STATMENT);
         assertThat(testQuery.getCreated_at()).isEqualTo(UPDATED_CREATED_AT);
+        assertThat(testQuery.getDatabase()).isEqualTo(UPDATED_DATABASE);
     }
 
     @Test

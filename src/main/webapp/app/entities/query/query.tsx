@@ -101,6 +101,9 @@ export class Query extends React.Component<IQueryProps, IQueryState> {
                   <th className="hand" onClick={this.sort('created_at')}>
                     Created At <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th className="hand" onClick={this.sort('database')}>
+                    Database <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th>
                     Connexion <FontAwesomeIcon icon="sort" />
                   </th>
@@ -121,6 +124,7 @@ export class Query extends React.Component<IQueryProps, IQueryState> {
                     <td>
                       <TextFormat type="date" value={query.created_at} format={APP_LOCAL_DATE_FORMAT} />
                     </td>
+                    <td>{query.database}</td>
                     <td>{query.connexion ? <Link to={`connexion/${query.connexion.id}`}>{query.connexion.id}</Link> : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">

@@ -121,6 +121,12 @@ export class QueryUpdate extends React.Component<IQueryUpdateProps, IQueryUpdate
                   <AvField id="query-created_at" type="date" className="form-control" name="created_at" />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="databaseLabel" for="database">
+                    Database
+                  </Label>
+                  <AvField id="query-database" type="text" name="database" />
+                </AvGroup>
+                <AvGroup>
                   <Label for="connexion.id">Connexion</Label>
                   <AvInput id="query-connexion" type="select" className="form-control" name="connexion.id">
                     <option value="" key="0" />

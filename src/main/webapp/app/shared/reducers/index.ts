@@ -17,10 +17,6 @@ import execution, {
 } from 'app/entities/execution/execution.reducer';
 
 // prettier-ignore
-import query, {
-  QueryState
-} from 'app/entities/query/query.reducer';
-// prettier-ignore
 import connexion, {
   ConnexionState
 } from 'app/entities/connexion/connexion.reducer';
@@ -28,6 +24,10 @@ import connexion, {
 import connector, {
   ConnectorState
 } from 'app/entities/connector/connector.reducer';
+// prettier-ignore
+import query, {
+  QueryState
+} from 'app/entities/query/query.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {

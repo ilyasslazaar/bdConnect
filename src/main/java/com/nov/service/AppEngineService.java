@@ -56,7 +56,6 @@ public class AppEngineService {
                 table.setRows(template.query(query, new RowMapper<Row>() {
                     @Override
                     public Row mapRow(ResultSet resultSet, int ix) throws SQLException {
-
                         return mapRowMethod(resultSet, ix, table);
                     }
                 }));
@@ -76,7 +75,8 @@ public class AppEngineService {
         }
         Row row = new Row();
         int columsCount = resultSet.getMetaData().getColumnCount();
-        for(int i=1;i<columsCount;i++){
+        for(int i=1;i<=columsCount;i++){
+
             row.addCollumn(new Column<String>(resultSet.getMetaData().getColumnName(i),resultSet.getString(i)));
         }
         return row;
@@ -118,12 +118,14 @@ public class AppEngineService {
                     @Override
                     public Object processMetaData(DatabaseMetaData databaseMetaData) throws SQLException,
                         MetaDataAccessException {
-                        return databaseMetaData.getCatalogs();
+                        return (conn.getConnector().getType().equals("oracle"))?databaseMetaData.getSchemas():databaseMetaData.getCatalogs();
                     }
                 });
             while (rs.next()){
+
+                System.out.println("in loop");
                 table.addRow(new Row( new Column<String>("Database Name",
-                    rs.getString("TABLE_CAT"))));
+                     rs.getString(1))));
             }
 
         } catch (MetaDataAccessException e) {

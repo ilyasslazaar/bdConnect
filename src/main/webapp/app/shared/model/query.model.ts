@@ -8,6 +8,7 @@ export interface IQuery {
   name?: string;
   statment?: string;
   created_at?: Moment;
+  database?: string;
   executions?: IExecution[];
   connexion?: IConnexion;
 }

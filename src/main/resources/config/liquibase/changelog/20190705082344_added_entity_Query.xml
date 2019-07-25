@@ -38,6 +38,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="jhi_database" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="connexion_id" type="bigint">
                 <constraints nullable="true" />
             </column>

@@ -46,6 +46,10 @@ export class QueryDetail extends React.Component<IQueryDetailProps> {
             <dd>
               <TextFormat value={queryEntity.created_at} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
+            <dt>
+              <span id="database">Database</span>
+            </dt>
+            <dd>{queryEntity.database}</dd>
             <dt>Connexion</dt>
             <dd>{queryEntity.connexion ? queryEntity.connexion.id : ''}</dd>
           </dl>

@@ -42,11 +42,13 @@ public class Query implements Serializable {
     @Column(name = "created_at")
     private LocalDate created_at;
 
-    @OneToMany(mappedBy = "query",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @Column(name = "jhi_database")
+    private String database;
+
+    @OneToMany(mappedBy = "query",fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Execution> executions = new HashSet<>();
     @ManyToOne
-    @JoinColumn(name = "connexion_id")
     @JsonIgnoreProperties("queries")
     private Connexion connexion;
 
@@ -109,6 +111,19 @@ public class Query implements Serializable {
 
     public void setCreated_at(LocalDate created_at) {
         this.created_at = created_at;
+    }
+
+    public String getDatabase() {
+        return database;
+    }
+
+    public Query database(String database) {
+        this.database = database;
+        return this;
+    }
+
+    public void setDatabase(String database) {
+        this.database = database;
     }
 
     public Set<Execution> getExecutions() {
@@ -178,6 +193,7 @@ public class Query implements Serializable {
             ", name='" + getName() + "'" +
             ", statment='" + getStatment() + "'" +
             ", created_at='" + getCreated_at() + "'" +
+            ", database='" + getDatabase() + "'" +
             "}";
     }
 }
