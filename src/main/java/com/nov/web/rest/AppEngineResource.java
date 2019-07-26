@@ -43,7 +43,8 @@ public class AppEngineResource {
 
             }
         }catch (Exception e){
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+            throw  new RuntimeException("Error on the server !");
         }
 
         return table;

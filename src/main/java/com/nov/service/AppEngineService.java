@@ -60,12 +60,12 @@ public class AppEngineService {
                     }
                 }));
             }
+            return table;
         }catch (BadSqlGrammarException e){
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+            throw  new RuntimeException("erorr on the server");
         }
 
-
-        return table;
     }
 
     // this method is used for both  executeQuery methods*
@@ -122,8 +122,6 @@ public class AppEngineService {
                     }
                 });
             while (rs.next()){
-
-                System.out.println("in loop");
                 table.addRow(new Row( new Column<String>("Database Name",
                      rs.getString(1))));
             }
