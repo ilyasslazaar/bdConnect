@@ -31,14 +31,18 @@ public class AppEngineResource {
         Long connexion_id;
         String statment = null;
         SQLTable table = null;
+        Integer offset=0 ,limit=9;
         System.out.println(payload);
         try{
             statment = (String)payload.get("statement");
             connexion_id = Long.valueOf((String)(payload.get("connection")));
+            offset = Integer.valueOf((String)(payload.get("offset")));
+            limit = Integer.valueOf((String)(payload.get("limit")));
             conn = connexionService.getConnexionById(connexion_id);
             if(conn != null && statment !=null){
                 // execute statment
-                 table = appEngineService.executeQuery(conn, statment);
+                offset = (offset ==1) ?offset : offset*10-10;
+                 table = appEngineService.executeQuery(conn, statment,offset,limit);
 
 
             }
@@ -50,14 +54,15 @@ public class AppEngineResource {
         return table;
     }
     @GetMapping("/statment/{query_id}")
-    public SQLTable executeStatmentWithId(@PathVariable Long query_id) throws Exception {
+    public SQLTable executeStatmentWithId(@PathVariable Long query_id,@RequestParam Integer cp,@RequestParam Integer ps) throws Exception {
         SQLTable table = null;
+        cp = (cp == 1 )?cp : cp*10;
         try{
 
             Query query = connexionService.getConnextionQueryById(query_id);
             if(query !=null){
                 // execute statment
-                table = appEngineService.executeQuery(query.getConnexion(), query);
+                table = appEngineService.executeQuery(query.getConnexion(), query,cp,ps);
             }
         }catch (Exception e){
             e.printStackTrace();

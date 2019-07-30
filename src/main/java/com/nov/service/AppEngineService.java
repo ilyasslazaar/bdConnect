@@ -27,6 +27,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -37,13 +38,13 @@ public class AppEngineService {
 
     private final Logger log = LoggerFactory.getLogger(AppEngineService.class);
 
+    private int totalPages = 0;
     /*
         this method  executes any query to any connection given as parameter
      */
-    public SQLTable executeQuery(Connexion conn, String query){
+    public SQLTable executeQuery(Connexion conn, String query,int offset,int limit){
         SQLTable table = new SQLTable();
         SQLConnectionBuilder builder = new SQLConnectionBuilder(conn);
-        System.out.println(builder.getConnetionParams());
         JdbcTemplate template = builder.build();
         try {
             if(query.toLowerCase().contains("update")||query.toLowerCase().contains("delete")
@@ -53,19 +54,32 @@ public class AppEngineService {
                 table.addRow(new Row(new Column("Rows affected",count)));
             }else {
 
-                table.setRows(template.query(query, new RowMapper<Row>() {
+                List<Row> rows =  template.query(query, new RowMapper<Row>() {
                     @Override
                     public Row mapRow(ResultSet resultSet, int ix) throws SQLException {
-                        return mapRowMethod(resultSet, ix, table);
+                        return CompareOffsetAndLimit(ix, offset, limit)?null :mapRowMethod(resultSet, ix, table);
                     }
-                }));
+                });
+                rows.removeIf(Objects::isNull);  // this is used to trim nulls from result returned by row mapper
+                table.setRows(rows);
             }
+            table.setTotalRecords((totalPages/10)+1);
+            this.totalPages = 0;
             return table;
         }catch (BadSqlGrammarException e){
             System.out.println(e.getMessage());
             throw  new RuntimeException("erorr on the server");
         }
 
+    }
+     // this method is extracted  to test limit and offset (used for pagination)
+    private boolean CompareOffsetAndLimit(int ix, int offset, int limit) {
+        totalPages++;
+        if(ix<offset-1 || ix>=(offset+limit-1)) {
+
+            return true;
+        }
+        return false;
     }
 
     // this method is used for both  executeQuery methods*
@@ -82,7 +96,7 @@ public class AppEngineService {
         return row;
     }
 
-    public SQLTable executeQuery(Connexion conn, Query query){
+    public SQLTable executeQuery(Connexion conn, Query query,int offset,int limit){
         SQLTable table = new SQLTable();
         SQLConnectionBuilder builder = new SQLConnectionBuilder(conn);
 
@@ -91,14 +105,20 @@ public class AppEngineService {
         ex.setExDate(LocalDate.now());
         try {
 
-            table.setRows(template.query(query.getStatment(), new RowMapper<Row>() {
+            List<Row> rows =template.query(query.getStatment(), new RowMapper<Row>() {
                 @Override
                 public Row mapRow(ResultSet resultSet, int ix) throws SQLException {
-                    return mapRowMethod(resultSet, ix, table);
+
+                    return CompareOffsetAndLimit(ix, offset, limit)?null :mapRowMethod(resultSet, ix, table);
                 }
 
 
-            }));
+            });
+
+            rows.removeIf(Objects::isNull);
+            table.setRows(rows);
+            table.setTotalRecords((totalPages/10)+1);
+            this.totalPages = 0;
             ex.setStatus(true);
         }catch (BadSqlGrammarException e){
             ex.setStatus(false);

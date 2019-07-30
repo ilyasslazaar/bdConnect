@@ -6,6 +6,15 @@ import java.util.List;
 public class SQLTable {
 
     private String TableName;
+    private int totalRecords;
+
+    public int getTotalRecords() {
+        return totalRecords;
+    }
+
+    public void setTotalRecords(int totalRecords) {
+        this.totalRecords = totalRecords;
+    }
 
     private List<Row> rows;
 
