@@ -105,7 +105,7 @@ public class AppEngineService {
         ex.setExDate(LocalDate.now());
         try {
 
-            List<Row> rows =template.query(query.getStatment(), new RowMapper<Row>() {
+            List<Row> rows = template.query(query.getStatment(), new RowMapper<Row>() {
                 @Override
                 public Row mapRow(ResultSet resultSet, int ix) throws SQLException {
 
