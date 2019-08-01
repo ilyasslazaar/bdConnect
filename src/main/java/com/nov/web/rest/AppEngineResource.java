@@ -56,6 +56,7 @@ public class AppEngineResource {
     @GetMapping("/statment/{query_id}")
     public SQLTable executeStatmentWithId(@PathVariable Long query_id,@RequestParam Integer cp,@RequestParam Integer ps) throws Exception {
         SQLTable table = null;
+        // cp = current page
         cp = (cp == 1 )?cp : cp*10;
         try{
 

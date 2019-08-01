@@ -34,7 +34,7 @@ import java.util.Objects;
 public class AppEngineService {
 
     @Autowired
-    QueryRepository queryRepository;
+    private QueryRepository queryRepository;
 
     private final Logger log = LoggerFactory.getLogger(AppEngineService.class);
 
@@ -46,14 +46,32 @@ public class AppEngineService {
         SQLTable table = new SQLTable();
         SQLConnectionBuilder builder = new SQLConnectionBuilder(conn);
         JdbcTemplate template = builder.build();
+
+        String[] arr  =  query.trim().split(";");
+        if(query.trim()==null || query.trim().equals("")){
+            throw  new RuntimeException("Query is empty!");
+        }
+        for (String qr: arr) {
+            if(qr != null && !qr.equals("")) {
+                table = getSqlTable(qr, offset, limit, template);
+            }
+        }
+
+
+        return table;
+
+    }
+
+    private SQLTable getSqlTable(String query, int offset, int limit, JdbcTemplate template) {
+        SQLTable table = new SQLTable();
+        query = query.trim();
         try {
-            if(query.toLowerCase().contains("update")||query.toLowerCase().contains("delete")
-            ||query.toLowerCase().contains("insert")){
+            if(query.toLowerCase().startsWith("update")||query.toLowerCase().startsWith("delete")
+            ||query.toLowerCase().startsWith("insert")){
                 int count = template.update(query);
                 table.setTableName("Executed query");
                 table.addRow(new Row(new Column("Rows affected",count)));
             }else {
-
                 List<Row> rows =  template.query(query, new RowMapper<Row>() {
                     @Override
                     public Row mapRow(ResultSet resultSet, int ix) throws SQLException {
@@ -70,9 +88,9 @@ public class AppEngineService {
             System.out.println(e.getMessage());
             throw  new RuntimeException("erorr on the server");
         }
-
     }
-     // this method is extracted  to test limit and offset (used for pagination)
+
+    // this method is extracted  to test limit and offset (used for pagination)
     private boolean CompareOffsetAndLimit(int ix, int offset, int limit) {
         totalPages++;
         if(ix<offset-1 || ix>=(offset+limit-1)) {

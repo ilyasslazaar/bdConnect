@@ -131,8 +131,8 @@
             <artifactId>jackson-datatype-hibernate5</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.oracle.jdbc</groupId>
-            <artifactId>ojdbc6</artifactId>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc7</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
