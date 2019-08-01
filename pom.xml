@@ -135,7 +135,7 @@
             <artifactId>ojdbc7</artifactId>
             <version>12.2.0.1</version>
             <scope>system</scope>
-		    <systemPath>${project.basedir}/lib/ojdbc8.jar</systemPath>
+		    <systemPath>${project.basedir}/lib/ojdbc7.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
