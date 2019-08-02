@@ -39,9 +39,11 @@ public class SQLConnectionBuilder {
         DriverManagerDataSource ds = new DriverManagerDataSource();
 
         String baseUrl = null;
+        String sslParam = null;
         switch (SGBD){
             case "mysql":
                 baseUrl="jdbc:mysql://";
+                sslParam = connexion.isSsl() ?"useSSL=true":"useSSL=false";
                 break;
             case "oracle":
                 baseUrl = "jdbc:oracle:thin:@";
@@ -50,14 +52,22 @@ public class SQLConnectionBuilder {
 
                 baseUrl = "jjdbc:h2:mem:";
                 break;
+            case "postgree":
+                baseUrl = "jdbc:postgresql://";
+                sslParam = connexion.isSsl() ?"ssl=true&":"ssl=false&";
+                sslParam+="sslfactory=org.postgresql.ssl.NonValidatingFactory";
+                break;
+            default:
+                break;
         }
         String separator ="/";
         /*if(connexion.getConnector().getType().equals("oracle")){
             separator=":";
         }*/
+
         ds.setDriverClassName(connexion.getConnector().getDriver());
         ds.setUrl(baseUrl+connexion.getHostname()+":"+connexion.getPort()+separator
-            +connexion.getCurrentDatabase());
+            +connexion.getCurrentDatabase()+"?"+sslParam);
         ds.setUsername(connexion.getUser());
         ds.setPassword(connexion.getPassword());
 
