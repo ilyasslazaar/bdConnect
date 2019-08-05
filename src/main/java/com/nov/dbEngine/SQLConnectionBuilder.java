@@ -37,9 +37,9 @@ public class SQLConnectionBuilder {
 
     public DataSource dataSource(String SGBD) {
         DriverManagerDataSource ds = new DriverManagerDataSource();
-
+        System.out.println("sgbd = "+SGBD);
         String baseUrl = null;
-        String sslParam = null;
+        String sslParam = "";
         switch (SGBD){
             case "mysql":
                 baseUrl="jdbc:mysql://";
@@ -56,23 +56,22 @@ public class SQLConnectionBuilder {
                 baseUrl = "jdbc:postgresql://";
                 sslParam = connexion.isSsl() ?"ssl=true&":"ssl=false&";
                 sslParam+="sslfactory=org.postgresql.ssl.NonValidatingFactory";
+                System.out.println("sgbd = "+SGBD+" inside case postgree");
                 break;
             default:
                 break;
         }
-        String separator ="/";
-        /*if(connexion.getConnector().getType().equals("oracle")){
-            separator=":";
-        }*/
-
         ds.setDriverClassName(connexion.getConnector().getDriver());
-        ds.setUrl(baseUrl+connexion.getHostname()+":"+connexion.getPort()+separator
-            +connexion.getCurrentDatabase()+"?"+sslParam);
-        ds.setUsername(connexion.getUser());
+        if(connexion.getConnector().getType().equals("oracle")){
+            ds.setUrl(baseUrl + connexion.getHostname() + ":" + connexion.getPort() + ":"
+                + connexion.getCurrentDatabase());
+            ds.setUsername(connexion.getUser());
+        }else {
+            ds.setUrl(baseUrl + connexion.getHostname() + ":" + connexion.getPort() +"/"
+                + connexion.getCurrentDatabase() + "?" + sslParam);
+            ds.setUsername(connexion.getUser());
+        }
         ds.setPassword(connexion.getPassword());
-
-        System.out.println(baseUrl+connexion.getHostname()+":"+connexion.getPort()+separator
-            +connexion.getCurrentDatabase());
 
         return ds;
     }
