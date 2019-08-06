@@ -85,13 +85,7 @@ public class ConnexionResource {
     @PutMapping("/connexions")
     public ResponseEntity<Connexion> updateConnexion(@RequestBody Connexion connexion) throws URISyntaxException {
         log.debug("REST request to update Connexion : {}", connexion);
-        if (connexion.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "id is null");
-        }
-        Connexion result = connexionRepository.save(connexion);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, connexion.getId().toString()))
-            .body(result);
+        return SaveConnection(connexion);
     }
 
     /**
@@ -161,7 +155,23 @@ public class ConnexionResource {
     }
 
 
+    @PutMapping("/connexions/{connectorId}")
+    public ResponseEntity<Connexion> updateConn(@RequestBody Connexion connexion,@PathVariable String connectorId) throws URISyntaxException {
 
-
+        log.debug("REST request to update Connexion with connector : {}", connexion);
+        connexion.setConnector(connectorRepository.getOne(Long.valueOf(connectorId)));
+        return SaveConnection(connexion);
+    }
+// extracted this code  because it is used twice in put connection Actions
+    // created new one to keep back Office  working correctly
+    private ResponseEntity<Connexion> SaveConnection(@RequestBody Connexion connexion) {
+        if (connexion.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "id is null");
+        }
+        Connexion result = connexionService.saveConnexion(connexion);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, connexion.getId().toString()))
+            .body(result);
+    }
 
 }
