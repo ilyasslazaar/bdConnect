@@ -1,14 +1,19 @@
 package com.nov.web.rest;
+import com.nov.domain.Connexion;
 import com.nov.domain.Query;
 import com.nov.repository.QueryRepository;
+import com.nov.service.ConnexionService;
 import com.nov.web.rest.errors.BadRequestAlertException;
 import com.nov.web.rest.util.HeaderUtil;
 import com.nov.web.rest.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +37,11 @@ public class QueryResource {
 
     private static final String ENTITY_NAME = "query";
 
+    @Autowired
     private final QueryRepository queryRepository;
+
+    @Autowired
+    private ConnexionService connexionService;
 
     public QueryResource(QueryRepository queryRepository) {
         this.queryRepository = queryRepository;
@@ -117,4 +126,12 @@ public class QueryResource {
         queryRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    @GetMapping("/connections/{IdConn}/queries")
+    public Page<Query> getConnexionsByUser(@RequestParam Integer currentPage, @RequestParam Integer pageSize,
+                                           @RequestParam String search, @RequestParam String orderBy, @PathVariable Long IdConn,@RequestParam  Integer u){
+        Pageable pageable = PageRequest.of(currentPage-1, pageSize, Sort.by(orderBy));
+        return connexionService.getAllQueriesByConnectionId(IdConn,pageable,u);
+    }
+
 }

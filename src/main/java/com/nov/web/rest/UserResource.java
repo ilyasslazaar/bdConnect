@@ -144,6 +144,7 @@ public class UserResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
+
     /**
      * @return a string list of the all of the roles
      */

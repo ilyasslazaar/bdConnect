@@ -58,16 +58,15 @@ public class ConnexionResource {
      */
     @PostMapping("/connexions")
     public ResponseEntity<Connexion> createConnexion(@RequestBody Connexion connexion,@RequestParam Long connectorId) throws URISyntaxException {
-
-
-        log.debug("REST request to save Connexion : {}", connexion);
-        if (connexion.getId() != null) {
-            throw new BadRequestAlertException("A new connexion cannot already have an ID", ENTITY_NAME, "idexists");
-        }
-        Connector connector = connectorRepository.findById(connectorId).get();
-        connexion.setConnector(connector);
+        // this code is externalized because its used twice
+        AnalyseRequestAndassociateConnector(connexion, connectorId);
 
         Connexion result = connexionService.saveConnexion(connexion);
+     // this code is externalized because its used twice
+        return getConnexionResponseEntity(result);
+    }
+
+    private ResponseEntity<Connexion> getConnexionResponseEntity(Connexion result) throws URISyntaxException {
         return ResponseEntity.created(new URI("/api/connexions/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -127,11 +126,12 @@ public class ConnexionResource {
 
     //getConnections by userId
 
-    @GetMapping("/currentUserConnections")
-    public Page<Connexion> getConnexionsByUser(@RequestParam Integer currentPage, @RequestParam Integer pageSize, @RequestParam String search, @RequestParam String orderBy){
+    @GetMapping("/currentUserConnections/{byUser}")
+    public Page<Connexion> getConnexionsByUser(@RequestParam Integer currentPage, @RequestParam Integer pageSize,
+                                               @RequestParam String search, @RequestParam String orderBy,@PathVariable Integer byUser){
 
 
-        return connexionService.getConnexionsByUserId(currentPage,pageSize,search,orderBy);
+        return connexionService.getConnexionsByUserId(currentPage,pageSize,search,orderBy,byUser);
     }
 
     @PostMapping("/connexions/delete")
@@ -173,5 +173,25 @@ public class ConnexionResource {
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, connexion.getId().toString()))
             .body(result);
     }
+
+
+    @PostMapping("/connexions/{userId}/{connectorId}")
+    public ResponseEntity<Connexion> createConnexionForUser(@RequestBody Connexion connexion,
+                                                            @PathVariable Long connectorId,@PathVariable Long userId ) throws URISyntaxException {
+
+        AnalyseRequestAndassociateConnector(connexion, connectorId);
+        Connexion result = connexionService.saveConnexion(connexion,userId); // add connection and associate it to a user
+        return getConnexionResponseEntity(result);
+    }
+
+    private void AnalyseRequestAndassociateConnector(@RequestBody Connexion connexion, @PathVariable Long connectorId) {
+        log.debug("REST request to save Connexion : {}", connexion);
+        if (connexion.getId() != null) {
+            throw new BadRequestAlertException("A new connexion cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        Connector connector = connectorRepository.findById(connectorId).get();
+        connexion.setConnector(connector);
+    }
+
 
 }

@@ -17,9 +17,11 @@ import java.util.List;
 @Repository
 public interface ConnexionRepository extends PagingAndSortingRepository<Connexion, Long> {
 
+    @Query("select connexion from Connexion connexion where connexion.name like %?1%")
+    Page<Connexion> findAllConnections(String search, Pageable pageable);
+
     @Query("select connexion from Connexion connexion where connexion.name like %?1% and connexion.conxUser.login = ?#{principal.username}")
     Page<Connexion> findByConxUserIsCurrentUser(String search, Pageable pageable);
-
 
     @Query(value ="SELECT q FROM  Connexion  c join c.queries q where c.id = q.connexion and q.id = ?1 and c.conxUser.login = ?#{principal.username} ")
     com.nov.domain.Query getConnexionQueryById(Long query_id);
@@ -28,6 +30,9 @@ public interface ConnexionRepository extends PagingAndSortingRepository<Connexio
     @Query(value = "delete from Connexion where id in ?1")
     void deleteList(List<Long> ids);
 
+    @Query(value ="SELECT q FROM  Connexion  c join c.queries q where c.id = q.connexion and c.id = ?1 and c.conxUser.login = ?#{principal.username} ")
+    Page<com.nov.domain.Query> getConnexionQueriesByConnexionId(Long id,Pageable pageable);
 
-
+    @Query(value ="SELECT q FROM  Connexion  c join c.queries q where c.id = q.connexion and c.id = ?1")
+    Page<com.nov.domain.Query> getConnexionAllQueriesByConnexionId(Long id, Pageable pageable);
 }

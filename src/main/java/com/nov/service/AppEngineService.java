@@ -85,8 +85,10 @@ public class AppEngineService {
             this.totalPages = 0;
             return table;
         }catch (BadSqlGrammarException e){
-            System.out.println(e.getMessage());
-            throw  new RuntimeException("erorr on the server");
+            System.out.println("message : "+e.getMessage().split(":")[1]);
+            throw e;
+            //System.out.println(e.getMessage());
+           // throw  new RuntimeException("erorr on the server");
         }
     }
 

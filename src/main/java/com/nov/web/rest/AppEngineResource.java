@@ -47,8 +47,10 @@ public class AppEngineResource {
 
             }
         }catch (Exception e){
-            System.out.println(e.getMessage());
-            throw  new RuntimeException("Error on the server !");
+          //  System.out.println(e.getMessage());
+            //throw  new RuntimeException("Error on the server !");
+            System.out.println("Message : "+e.getMessage());
+            throw e;
         }
 
         return table;
