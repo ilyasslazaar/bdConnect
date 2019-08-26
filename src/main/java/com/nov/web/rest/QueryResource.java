@@ -133,5 +133,12 @@ public class QueryResource {
         Pageable pageable = PageRequest.of(currentPage-1, pageSize, Sort.by(orderBy));
         return connexionService.getAllQueriesByConnectionId(IdConn,pageable,u);
     }
+    @PostMapping("/queries/delete")
+    public ResponseEntity<Void> deleteQueries(@RequestBody List<Long> ids) {
+        log.debug("REST request to delete Queries : {}", ids);
+       queryRepository.deleteListQueries(ids);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, ids.toString())).build();
+    }
+
 
 }

@@ -20,6 +20,10 @@ public class QueryService {
     private  QueryRepository queryRepository;
     private final Logger log = LoggerFactory.getLogger(QueryService.class);
 
+    public void deleteListOfConnctions(List<Long> ids){
+        queryRepository.deleteListQueries(ids);
+    }
+
 
 
 

@@ -134,7 +134,7 @@ public class ConnexionResource {
         return connexionService.getConnexionsByUserId(currentPage,pageSize,search,orderBy,byUser);
     }
 
-    @PostMapping("/connexions/delete")
+       @PostMapping("/connexions/delete")
     public ResponseEntity<Void> deleteConnexions(@RequestBody List<Long> ids) {
         log.debug("REST request to delete Connexion : {}", ids);
         connexionService.deleteListOfConnctions(ids);
