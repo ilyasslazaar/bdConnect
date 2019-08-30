@@ -25,6 +25,18 @@ public class UserDTO {
     @Size(min = 1, max = 50)
     private String login;
 
+    @NotBlank
+    @Size(min=6,max=20)
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Size(max = 50)
     private String firstName;
 
