@@ -41,7 +41,6 @@ public class TestResource {
         if(id ==null){
             throw new Exception("id is null"+id);
         }
-
         Query query =  connexionService.getConnextionQueryById(id);
         service.getAllDatabases(query.getConnexion());
 

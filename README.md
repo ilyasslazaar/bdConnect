@@ -1,6 +1,36 @@
 # DB CONNECT
 
-This application was generated using JHipster 5.8.2, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v5.8.2](https://www.jhipster.tech/documentation-archive/v5.8.2).
+This application was generated with Jhipster as a monolithic application , the front end for admin dashboard is included with the Api under /webapps/app .
+
+users side of the application is separated ( front-end from back-end ).
+this application allows users :
+user with role admin : can execute connection and queies crud , and manage users.
+
+while users with [ ROLE_User ] authority : can only execute queries of the connections associated to him,
+
+databases supported : [ Oracle , Postgres , mysql ], in order to support more databaes such as SQLserver , a maven dependency of the given connector should be added to the project pom file and
+should add case for the given connector in "SQLConnectionBuilder.java ":
+
+####Exemple h2 database :
+
+```
+ case "h2":
+     baseUrl = "jjdbc:h2:mem:";
+break;
+```
+
+####Note :
+The hassle above can be avoided by implementing Eureka Configuration server to easly allow the user to configure databaes supported
+
+##perspectives :
+#####configurations externalisation :
+we still can pass a custom properties to the app at run time but,
+its preferable to :
+
+- implement Spring Cloud Eureka Configuration Server to allow
+  the user to push custom configuration to git repository and configure spring boot to use these configurations
+
+![alt text](https://o7planning.org/en/11723/cache/images/i/15359236.png)
 
 ## Development
 
