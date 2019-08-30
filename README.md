@@ -7,7 +7,7 @@ Users side of the application is separated ( front-end from back-end ).
 this application allows users :
 user with role admin : can execute connection and queies crud , and manage users.
 
-while users with [ ROLE_User ] authority : can only execute queries of the connections associated them,
+while users with [ ROLE_User ] authority : can only execute queries of the connections associated to them,
 
 databases supported : [ Oracle , Postgres , mysql ], in order to support more databaes such as SQLserver , a maven dependency of the given connector should be added to the project pom file and
 should add case for the given connector in [SQLConnectionBuilder.java ]:
