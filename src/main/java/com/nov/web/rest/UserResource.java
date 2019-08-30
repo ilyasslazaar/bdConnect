@@ -17,7 +17,9 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -144,6 +146,22 @@ public class UserResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
+    @GetMapping("/users/all")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<Page<UserDTO>> getAllUsersFront(@RequestParam Integer page,@RequestParam Integer size ) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        final Page<UserDTO> pagee = userService.getAllManagedUsers(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(pagee, "/api/users/all");
+        return new ResponseEntity<>(pagee, headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/users/roles")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public List<String> getRoles() {
+        return userService.getAuthorities();
+    }
+
 
     /**
      * @return a string list of the all of the roles
@@ -181,4 +199,13 @@ public class UserResource {
         userService.deleteUser(login);
         return ResponseEntity.ok().headers(HeaderUtil.createAlert( "A user is deleted with identifier " + login, login)).build();
     }
+
+    @PostMapping("/users/delete")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<Void> deleteUserFront(@RequestBody List<Long> userIds) {
+        log.debug("REST request to delete User: {}", userIds);
+        userService.deleteListOfUsers(userIds);
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert( "user(s) deleted with identifier " , userIds.toString())).build();
+    }
+
 }
