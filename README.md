@@ -11,7 +11,7 @@ while users with [ ROLE_User ] authority : can only execute queries of the conne
 databases supported : [ Oracle , Postgres , mysql ], in order to support more databaes such as SQLserver , a maven dependency of the given connector should be added to the project pom file and
 should add case for the given connector in "SQLConnectionBuilder.java ":
 
-####Exemple h2 database :
+#### Exemple h2 database :
 
 ```
  case "h2":
@@ -19,11 +19,14 @@ should add case for the given connector in "SQLConnectionBuilder.java ":
 break;
 ```
 
-####Note :
+#### Note :
+
 The hassle above can be avoided by implementing Eureka Configuration server to easly allow the user to configure databaes supported
 
-##perspectives :
-#####configurations externalisation :
+## perspectives :
+
+##### configurations externalisation :
+
 we still can pass a custom properties to the app at run time but,
 its preferable to :
 
