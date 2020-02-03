@@ -126,4 +126,13 @@ public class Connector implements Serializable {
             ", driver='" + getDriver() + "'" +
             "}";
     }
+
+	public Connector(@NotNull String type,@NotNull String driver) {
+		super();
+		this.type = type;
+		this.driver = driver;
+	}
+    
+    
+    
 }

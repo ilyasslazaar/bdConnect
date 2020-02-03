@@ -1,18 +1,14 @@
 package com.nov.dbEngine;
 
 
-import ch.qos.logback.core.db.dialect.OracleDialect;
-import com.mysql.jdbc.Driver;
-import com.nov.domain.Connexion;
-import org.springframework.context.annotation.Bean;
+
+import javax.sql.DataSource;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.logging.Logger;
+import com.nov.domain.Connexion;
+
 
 public class SQLConnectionBuilder {
     private  Connexion connexion;
@@ -37,26 +33,20 @@ public class SQLConnectionBuilder {
 
     public DataSource dataSource(String SGBD) {
         DriverManagerDataSource ds = new DriverManagerDataSource();
-        System.out.println("sgbd = "+SGBD);
         String baseUrl = null;
-        String sslParam = "";
         switch (SGBD){
-            case "mysql":
-                baseUrl="jdbc:mysql://";
-                sslParam = connexion.isSsl() ?"useSSL=true":"useSSL=false";
+            case Constants.MYSQL:
+                baseUrl= Constants.MYSQL_BASE_URL;
                 break;
-            case "oracle":
-                baseUrl = "jdbc:oracle:thin:@";
+            case Constants.ORACLE:
+                baseUrl = Constants.ORACLE_BASE_URL;
                 break;
-            case "h2":
+            case Constants.H2:
 
-                baseUrl = "jjdbc:h2:mem:";
+                baseUrl = Constants.H2_BASE_URL;
                 break;
-            case "postgree":
-                baseUrl = "jdbc:postgresql://";
-                sslParam = connexion.isSsl() ?"ssl=true&":"ssl=false&";
-                sslParam+="sslfactory=org.postgresql.ssl.NonValidatingFactory";
-                System.out.println("sgbd = "+SGBD+" inside case postgree");
+            case Constants.POSTGRESQL:
+                baseUrl = Constants.POSTGRE_SQL_BASE_URL;
                 break;
             default:
                 break;
@@ -68,7 +58,7 @@ public class SQLConnectionBuilder {
             ds.setUsername(connexion.getUser());
         }else {
             ds.setUrl(baseUrl + connexion.getHostname() + ":" + connexion.getPort() +"/"
-                + connexion.getCurrentDatabase() + "?" + sslParam);
+                + connexion.getCurrentDatabase() );
             ds.setUsername(connexion.getUser());
         }
         ds.setPassword(connexion.getPassword());

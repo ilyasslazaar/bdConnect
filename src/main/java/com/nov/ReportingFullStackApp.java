@@ -2,12 +2,17 @@ package com.nov;
 
 import com.nov.config.ApplicationProperties;
 import com.nov.config.DefaultProfileUtil;
+import com.nov.dbEngine.Constants;
+import com.nov.domain.Connector;
+import com.nov.repository.ConnectorRepository;
 
 import io.github.jhipster.config.JHipsterConstants;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
@@ -22,14 +27,17 @@ import java.util.Collection;
 
 @SpringBootApplication
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
-public class ReportingFullStackApp {
+public class ReportingFullStackApp implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(ReportingFullStackApp.class);
 
     private final Environment env;
 
+    @Autowired
+    ConnectorRepository connectorRepository;
+    
     public ReportingFullStackApp(Environment env) {
-        this.env = env;
+      this.env = env;
     }
 
     /**
@@ -95,4 +103,22 @@ public class ReportingFullStackApp {
             contextPath,
             env.getActiveProfiles());
     }
+
+	@Override
+	public void run(String... args) throws Exception {
+		
+		// checking if connectors already exist in database
+		if(connectorRepository.findAll().isEmpty()) {
+			log.info("[Connectors insertion]: Conectors already inserted !");
+			return;
+		}
+		
+		connectorRepository.saveAll(Arrays.asList( new Connector(Constants.MYSQL, Constants.MYSQL_DRIVER),
+												   new Connector(Constants.ORACLE, Constants.ORACLE_DRIVER),
+												   new Connector(Constants.POSTGRESQL, Constants.POSTGRESQL_DRIVER)
+												   
+												   ));
+		
+		
+	}
 }

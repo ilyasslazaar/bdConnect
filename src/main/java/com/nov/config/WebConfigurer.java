@@ -17,6 +17,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
@@ -161,7 +162,7 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
 
     // Custom configurations
 
-
+  
 
 
 
