@@ -22,7 +22,7 @@ import java.util.Objects;
 public class Connector implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,6 +37,11 @@ public class Connector implements Serializable {
     @OneToMany(mappedBy = "connector")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Connexion> connexions = new HashSet<>();
+
+    public Connector() {
+
+    }
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -132,7 +137,7 @@ public class Connector implements Serializable {
 		this.type = type;
 		this.driver = driver;
 	}
-    
-    
-    
+
+
+
 }

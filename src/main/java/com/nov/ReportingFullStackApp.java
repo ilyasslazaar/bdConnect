@@ -35,7 +35,7 @@ public class ReportingFullStackApp implements CommandLineRunner {
 
     @Autowired
     ConnectorRepository connectorRepository;
-    
+
     public ReportingFullStackApp(Environment env) {
       this.env = env;
     }
@@ -106,19 +106,18 @@ public class ReportingFullStackApp implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		
+
 		// checking if connectors already exist in database
 		if(connectorRepository.findAll().isEmpty()) {
-			log.info("[Connectors insertion]: Conectors already inserted !");
-			return;
+            connectorRepository.saveAll(Arrays.asList( new Connector(Constants.MYSQL, Constants.MYSQL_DRIVER),
+                new Connector(Constants.ORACLE, Constants.ORACLE_DRIVER),
+                new Connector(Constants.POSTGRESQL, Constants.POSTGRESQL_DRIVER)
+
+            ));
 		}
-		
-		connectorRepository.saveAll(Arrays.asList( new Connector(Constants.MYSQL, Constants.MYSQL_DRIVER),
-												   new Connector(Constants.ORACLE, Constants.ORACLE_DRIVER),
-												   new Connector(Constants.POSTGRESQL, Constants.POSTGRESQL_DRIVER)
-												   
-												   ));
-		
-		
+
+
+
+
 	}
 }
