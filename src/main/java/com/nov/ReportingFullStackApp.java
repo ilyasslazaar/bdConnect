@@ -5,9 +5,7 @@ import com.nov.config.DefaultProfileUtil;
 import com.nov.dbEngine.Constants;
 import com.nov.domain.Connector;
 import com.nov.repository.ConnectorRepository;
-
 import io.github.jhipster.config.JHipsterConstants;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +35,7 @@ public class ReportingFullStackApp implements CommandLineRunner {
     ConnectorRepository connectorRepository;
 
     public ReportingFullStackApp(Environment env) {
-      this.env = env;
+        this.env = env;
     }
 
     /**
@@ -104,20 +102,16 @@ public class ReportingFullStackApp implements CommandLineRunner {
             env.getActiveProfiles());
     }
 
-	@Override
-	public void run(String... args) throws Exception {
+    @Override
+    public void run(String... args) throws Exception {
 
-		// checking if connectors already exist in database
-		if(connectorRepository.findAll().isEmpty()) {
-            connectorRepository.saveAll(Arrays.asList( new Connector(Constants.MYSQL, Constants.MYSQL_DRIVER),
+        // checking if connectors already exist in database
+        if (connectorRepository.findAll().isEmpty()) {
+            log.info("[ Connectors ] : adding connectors to Database");
+            connectorRepository.saveAll(Arrays.asList(new Connector(Constants.MYSQL, Constants.MYSQL_DRIVER),
                 new Connector(Constants.ORACLE, Constants.ORACLE_DRIVER),
                 new Connector(Constants.POSTGRESQL, Constants.POSTGRESQL_DRIVER)
-
             ));
-		}
-
-
-
-
-	}
+        }
+    }
 }

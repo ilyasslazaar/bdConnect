@@ -156,11 +156,15 @@ public class ConnexionResource {
 
 
     @PutMapping("/connexions/{connectorId}")
-    public ResponseEntity<Connexion> updateConn(@RequestBody Connexion connexion,@PathVariable String connectorId) throws URISyntaxException {
+    public ResponseEntity<Connexion> updateConn(@RequestBody Connexion connexion,@PathVariable String connectorId, @RequestParam Long u ) throws URISyntaxException {
 
         log.debug("REST request to update Connexion with connector : {}", connexion);
         connexion.setConnector(connectorRepository.getOne(Long.valueOf(connectorId)));
-        return SaveConnection(connexion);
+        connexion = connexionService.saveConnexion(connexion,u);
+
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, connexion.getId().toString()))
+            .body(connexion);
     }
 // extracted this code  because it is used twice in put connection Actions
     // created new one to keep back Office  working correctly

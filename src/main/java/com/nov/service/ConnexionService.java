@@ -21,10 +21,9 @@ import java.util.List;
 public class ConnexionService {
 
     @Autowired
-    ConnexionRepository repository;
-
+    private ConnexionRepository repository;
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     private final Logger log = LoggerFactory.getLogger(ConnexionService.class);
 
@@ -49,7 +48,6 @@ public class ConnexionService {
         User user = userService.getUserWithAuthorities(userId).get();
         connexion.setConxUser(user);
         return repository.save(connexion);
-
     }
 
     public Connexion  getConnexionById(Long id){
